@@ -2,13 +2,10 @@
 let currentSlide = 0;
 let totalSlides = 0;
 let selectedPlayer = null;
-let backgroundMusic = null;
-let musicPlaying = false;
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     loadPlayerSelection();
-    initMusic();
 });
 
 // Load player selection screen
@@ -53,9 +50,6 @@ function selectPlayer(player) {
     document.getElementById('slides-container').classList.add('active');
     document.getElementById('navigation').classList.remove('hidden');
     showSlide(0);
-
-    // Start music on user interaction
-    playMusic();
 }
 
 // Generate all slides
@@ -736,56 +730,4 @@ function downloadFallback(canvas) {
 
     const shareBtn = document.getElementById('share-summary-btn');
     shareBtn.textContent = '✅ Downloaded!';
-}
-
-// Background Music Control
-function initMusic() {
-    backgroundMusic = document.getElementById('background-music');
-    const musicToggle = document.getElementById('music-toggle');
-
-    if (!backgroundMusic) {
-        console.error('Music element not found!');
-        return;
-    }
-
-    // Set volume to 30%
-    backgroundMusic.volume = 0.3;
-
-    // Click handler for toggle button
-    musicToggle.addEventListener('click', () => {
-        if (musicPlaying) {
-            backgroundMusic.pause();
-            musicToggle.textContent = '🔇';
-            musicToggle.classList.add('muted');
-            musicPlaying = false;
-        } else {
-            backgroundMusic.play()
-                .then(() => {
-                    musicToggle.textContent = '🔊';
-                    musicToggle.classList.remove('muted');
-                    musicPlaying = true;
-                })
-                .catch(err => {
-                    console.error('Failed to play music:', err);
-                    alert('Music file not found or cannot play. Make sure music.mp3 is uploaded to GitHub.');
-                });
-        }
-    });
-}
-
-function playMusic() {
-    if (backgroundMusic && !musicPlaying) {
-        backgroundMusic.play()
-            .then(() => {
-                const musicToggle = document.getElementById('music-toggle');
-                musicToggle.textContent = '🔊';
-                musicToggle.classList.remove('muted');
-                musicPlaying = true;
-                console.log('Music started playing');
-            })
-            .catch(err => {
-                console.log('Autoplay blocked or music file missing:', err);
-                // User can manually click the button
-            });
-    }
 }
