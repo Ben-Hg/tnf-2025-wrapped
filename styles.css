@@ -485,7 +485,7 @@ body {
     }
 
     .slide {
-        min-height: auto;
+        min-height: 100vh;
         padding: 20px 15px;
     }
 
