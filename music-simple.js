@@ -38,12 +38,21 @@ window.addEventListener('load', function() {
     // Function to start music
     function startMusic() {
         console.log('Attempting to play music...');
+        console.log('Audio ready state:', audio.readyState);
+        console.log('Audio paused:', audio.paused);
+        console.log('Audio current time:', audio.currentTime);
+        console.log('Audio duration:', audio.duration);
+        console.log('Audio volume:', audio.volume);
+        console.log('Audio muted:', audio.muted);
+
         audio.play()
             .then(() => {
                 button.textContent = '🔊';
                 button.classList.remove('muted');
                 playing = true;
                 console.log('✓ Music is playing!');
+                console.log('After play - Audio paused:', audio.paused);
+                console.log('After play - Audio current time:', audio.currentTime);
             })
             .catch(err => {
                 button.textContent = '🔇';
