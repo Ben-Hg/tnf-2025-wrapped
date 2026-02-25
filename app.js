@@ -51,6 +51,9 @@ function selectPlayer(player) {
     document.getElementById('slides-container').classList.add('active');
     document.getElementById('navigation').classList.remove('hidden');
     showSlide(0);
+
+    // Try to start music after user interaction
+    startMusic();
 }
 
 // Generate all slides
@@ -734,10 +737,13 @@ function downloadFallback(canvas) {
 }
 
 // Background Music Control
+let music;
+let toggleBtn;
+let isPlaying = false;
+
 function setupMusicControl() {
-    const music = document.getElementById('background-music');
-    const toggleBtn = document.getElementById('music-toggle');
-    let isPlaying = false;
+    music = document.getElementById('background-music');
+    toggleBtn = document.getElementById('music-toggle');
 
     // Set initial volume to 30% (subtle background music)
     music.volume = 0.3;
@@ -749,31 +755,27 @@ function setupMusicControl() {
             toggleBtn.classList.add('muted');
             isPlaying = false;
         } else {
-            // Try to play, but handle autoplay restrictions
             music.play().then(() => {
                 toggleBtn.textContent = '🔊';
                 toggleBtn.classList.remove('muted');
                 isPlaying = true;
             }).catch(err => {
-                console.log('Music autoplay blocked:', err);
+                console.log('Music play blocked:', err);
+                alert('Click the 🔊 button to play music');
             });
         }
     });
+}
 
-    // Auto-play music when user selects a player (user interaction enables autoplay)
-    const originalSelectPlayer = window.selectPlayer;
-    window.selectPlayer = function(player) {
-        originalSelectPlayer(player);
-
-        // Try to start music after user interaction
-        if (!isPlaying) {
-            music.play().then(() => {
-                toggleBtn.textContent = '🔊';
-                toggleBtn.classList.remove('muted');
-                isPlaying = true;
-            }).catch(err => {
-                console.log('Music autoplay still blocked:', err);
-            });
-        }
-    };
+function startMusic() {
+    if (music && !isPlaying) {
+        music.play().then(() => {
+            toggleBtn.textContent = '🔊';
+            toggleBtn.classList.remove('muted');
+            isPlaying = true;
+        }).catch(err => {
+            console.log('Music autoplay blocked:', err);
+            // Silent fail - user can click button to play manually
+        });
+    }
 }
