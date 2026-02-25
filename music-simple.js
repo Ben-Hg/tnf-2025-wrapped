@@ -1,61 +1,76 @@
-// Simple Music Control - Autoplay on page load
+// Simple Music Control - With detailed debugging
 
-// Wait for page to fully load
 window.addEventListener('load', function() {
+    console.log('=== MUSIC SYSTEM LOADING ===');
+
     const audio = document.getElementById('background-music');
     const button = document.getElementById('music-toggle');
 
-    if (!audio || !button) {
-        console.error('Music elements not found');
+    // Check if elements exist
+    if (!audio) {
+        console.error('ERROR: Audio element not found!');
+        return;
+    }
+    if (!button) {
+        console.error('ERROR: Button element not found!');
         return;
     }
 
-    // Set volume
-    audio.volume = 0.3;
+    console.log('Audio element found:', audio);
+    console.log('Button element found:', button);
 
-    // Track playing state
+    // Check if audio source loaded
+    audio.addEventListener('loadeddata', function() {
+        console.log('Audio file loaded successfully');
+    });
+
+    audio.addEventListener('error', function(e) {
+        console.error('Audio loading error:', e);
+        console.error('Audio error code:', audio.error);
+    });
+
+    // Set volume to 30%
+    audio.volume = 0.3;
+    console.log('Volume set to:', audio.volume);
+
     let playing = false;
 
-    // Try to autoplay immediately
-    audio.play()
-        .then(() => {
-            button.textContent = '🔊';
-            button.classList.remove('muted');
-            playing = true;
-            console.log('Music autoplaying');
-        })
-        .catch(err => {
-            // Autoplay blocked by browser - show muted icon
-            button.textContent = '🔇';
-            button.classList.add('muted');
-            playing = false;
-            console.log('Autoplay blocked - click button to play:', err);
-        });
+    // Function to start music
+    function startMusic() {
+        console.log('Attempting to play music...');
+        audio.play()
+            .then(() => {
+                button.textContent = '🔊';
+                button.classList.remove('muted');
+                playing = true;
+                console.log('✓ Music is playing!');
+            })
+            .catch(err => {
+                button.textContent = '🔇';
+                button.classList.add('muted');
+                playing = false;
+                console.log('✗ Play failed:', err.message);
+            });
+    }
 
-    // Button click handler for manual control
-    button.onclick = function() {
+    // Try autoplay immediately
+    startMusic();
+
+    // Button click handler
+    button.onclick = function(e) {
+        e.preventDefault();
+        console.log('Button clicked. Current state:', playing ? 'playing' : 'paused');
+
         if (playing) {
-            // Pause music
             audio.pause();
             button.textContent = '🔇';
             button.classList.add('muted');
             playing = false;
             console.log('Music paused');
         } else {
-            // Play music
-            audio.play()
-                .then(() => {
-                    button.textContent = '🔊';
-                    button.classList.remove('muted');
-                    playing = true;
-                    console.log('Music playing');
-                })
-                .catch(err => {
-                    console.error('Music error:', err);
-                    alert('Cannot play music. Check if music.mp3 file exists.');
-                });
+            startMusic();
         }
     };
 
-    console.log('Music system loaded');
+    console.log('=== MUSIC SYSTEM READY ===');
 });
