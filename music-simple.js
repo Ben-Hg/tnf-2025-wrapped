@@ -53,13 +53,25 @@ window.addEventListener('load', function() {
             });
     }
 
-    // Try autoplay immediately
+    // Try autoplay immediately (will likely fail, but we try anyway)
     startMusic();
 
-    // Button click handler
+    // Start music when user clicks ANY player button
+    document.addEventListener('click', function startOnFirstClick(e) {
+        // Check if clicking a player button
+        if (e.target.classList.contains('player-btn')) {
+            console.log('Player selected - starting music!');
+            startMusic();
+            // Remove this listener after first click
+            document.removeEventListener('click', startOnFirstClick);
+        }
+    });
+
+    // Button click handler for manual control
     button.onclick = function(e) {
         e.preventDefault();
-        console.log('Button clicked. Current state:', playing ? 'playing' : 'paused');
+        e.stopPropagation(); // Don't trigger other click handlers
+        console.log('Music button clicked. Current state:', playing ? 'playing' : 'paused');
 
         if (playing) {
             audio.pause();
