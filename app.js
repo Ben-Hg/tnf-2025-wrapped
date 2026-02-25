@@ -2,11 +2,13 @@
 let currentSlide = 0;
 let totalSlides = 0;
 let selectedPlayer = null;
+let backgroundMusic = null;
+let musicPlaying = false;
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     loadPlayerSelection();
-    setupMusicControl();
+    initMusic();
 });
 
 // Load player selection screen
@@ -52,8 +54,8 @@ function selectPlayer(player) {
     document.getElementById('navigation').classList.remove('hidden');
     showSlide(0);
 
-    // Try to start music after user interaction
-    startMusic();
+    // Start music on user interaction
+    playMusic();
 }
 
 // Generate all slides
@@ -737,45 +739,53 @@ function downloadFallback(canvas) {
 }
 
 // Background Music Control
-let music;
-let toggleBtn;
-let isPlaying = false;
+function initMusic() {
+    backgroundMusic = document.getElementById('background-music');
+    const musicToggle = document.getElementById('music-toggle');
 
-function setupMusicControl() {
-    music = document.getElementById('background-music');
-    toggleBtn = document.getElementById('music-toggle');
+    if (!backgroundMusic) {
+        console.error('Music element not found!');
+        return;
+    }
 
-    // Set initial volume to 30% (subtle background music)
-    music.volume = 0.3;
+    // Set volume to 30%
+    backgroundMusic.volume = 0.3;
 
-    toggleBtn.addEventListener('click', () => {
-        if (isPlaying) {
-            music.pause();
-            toggleBtn.textContent = '🔇';
-            toggleBtn.classList.add('muted');
-            isPlaying = false;
+    // Click handler for toggle button
+    musicToggle.addEventListener('click', () => {
+        if (musicPlaying) {
+            backgroundMusic.pause();
+            musicToggle.textContent = '🔇';
+            musicToggle.classList.add('muted');
+            musicPlaying = false;
         } else {
-            music.play().then(() => {
-                toggleBtn.textContent = '🔊';
-                toggleBtn.classList.remove('muted');
-                isPlaying = true;
-            }).catch(err => {
-                console.log('Music play blocked:', err);
-                alert('Click the 🔊 button to play music');
-            });
+            backgroundMusic.play()
+                .then(() => {
+                    musicToggle.textContent = '🔊';
+                    musicToggle.classList.remove('muted');
+                    musicPlaying = true;
+                })
+                .catch(err => {
+                    console.error('Failed to play music:', err);
+                    alert('Music file not found or cannot play. Make sure music.mp3 is uploaded to GitHub.');
+                });
         }
     });
 }
 
-function startMusic() {
-    if (music && !isPlaying) {
-        music.play().then(() => {
-            toggleBtn.textContent = '🔊';
-            toggleBtn.classList.remove('muted');
-            isPlaying = true;
-        }).catch(err => {
-            console.log('Music autoplay blocked:', err);
-            // Silent fail - user can click button to play manually
-        });
+function playMusic() {
+    if (backgroundMusic && !musicPlaying) {
+        backgroundMusic.play()
+            .then(() => {
+                const musicToggle = document.getElementById('music-toggle');
+                musicToggle.textContent = '🔊';
+                musicToggle.classList.remove('muted');
+                musicPlaying = true;
+                console.log('Music started playing');
+            })
+            .catch(err => {
+                console.log('Autoplay blocked or music file missing:', err);
+                // User can manually click the button
+            });
     }
 }
