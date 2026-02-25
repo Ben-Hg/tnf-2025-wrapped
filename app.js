@@ -6,6 +6,7 @@ let selectedPlayer = null;
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     loadPlayerSelection();
+    setupMusicControl();
 });
 
 // Load player selection screen
@@ -730,4 +731,49 @@ function downloadFallback(canvas) {
 
     const shareBtn = document.getElementById('share-summary-btn');
     shareBtn.textContent = '✅ Downloaded!';
+}
+
+// Background Music Control
+function setupMusicControl() {
+    const music = document.getElementById('background-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    let isPlaying = false;
+
+    // Set initial volume to 30% (subtle background music)
+    music.volume = 0.3;
+
+    toggleBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            music.pause();
+            toggleBtn.textContent = '🔇';
+            toggleBtn.classList.add('muted');
+            isPlaying = false;
+        } else {
+            // Try to play, but handle autoplay restrictions
+            music.play().then(() => {
+                toggleBtn.textContent = '🔊';
+                toggleBtn.classList.remove('muted');
+                isPlaying = true;
+            }).catch(err => {
+                console.log('Music autoplay blocked:', err);
+            });
+        }
+    });
+
+    // Auto-play music when user selects a player (user interaction enables autoplay)
+    const originalSelectPlayer = window.selectPlayer;
+    window.selectPlayer = function(player) {
+        originalSelectPlayer(player);
+
+        // Try to start music after user interaction
+        if (!isPlaying) {
+            music.play().then(() => {
+                toggleBtn.textContent = '🔊';
+                toggleBtn.classList.remove('muted');
+                isPlaying = true;
+            }).catch(err => {
+                console.log('Music autoplay still blocked:', err);
+            });
+        }
+    };
 }
