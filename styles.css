@@ -453,16 +453,29 @@ body {
         font-size: 1rem;
     }
 
+    .slide {
+        min-height: auto;
+        padding: 20px 15px;
+    }
+
     .slide-title {
-        font-size: 2rem;
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
     }
 
     .slide-stat {
-        font-size: 3.5rem;
+        font-size: 2.8rem;
+        margin: 15px 0;
     }
 
     .slide-content {
-        padding: 40px 25px;
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .slide-description {
+        font-size: 1rem;
+        line-height: 1.4;
     }
 
     .player-grid {
@@ -471,41 +484,98 @@ body {
         max-height: 45vh;
     }
 
-    .stat-grid,
+    .stat-grid {
+        gap: 12px;
+        margin-top: 20px;
+    }
+
     .stat-grid.three-col {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 12px;
     }
 
     .stat-item {
-        padding: 25px 20px;
+        padding: 18px 15px;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .stat-value {
+        font-size: 1.8rem;
     }
 
     .navigation {
-        bottom: 20px;
+        bottom: 15px;
         gap: 15px;
     }
 
     .comparison-box {
-        padding: 30px 25px;
+        padding: 20px 18px;
+        margin-top: 20px;
     }
 
     .comparison-name {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
     }
 
-    .stat-value {
-        font-size: 2.3rem;
+    .comparison-reason {
+        font-size: 0.9rem;
+        line-height: 1.4;
     }
 
     .share-btn {
-        padding: 15px 30px;
-        font-size: 1rem;
+        padding: 12px 25px;
+        font-size: 0.95rem;
     }
 
     .search-input {
         padding: 12px 18px;
         font-size: 0.95rem;
+    }
+
+    /* Tighter spacing for shareable card on mobile */
+    .shareable-card {
+        padding: 20px 18px !important;
+    }
+
+    .shareable-card h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .shareable-card p {
+        font-size: 1rem !important;
+    }
+
+    .shareable-card .stat-grid {
+        margin-bottom: 20px !important;
+        gap: 10px !important;
+    }
+
+    .shareable-card .stat-item {
+        padding: 15px 12px !important;
+    }
+
+    .shareable-card .stat-value {
+        font-size: 1.6rem !important;
+    }
+
+    .shareable-card .comparison-box {
+        margin-bottom: 15px !important;
+        padding: 15px !important;
+    }
+
+    .shareable-card .comparison-name {
+        font-size: 1.3rem !important;
+    }
+
+    .shareable-card .comparison-reason {
+        font-size: 0.85rem !important;
     }
 }
 
