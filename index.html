@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNF 2025 Wrapped</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Player Selection Screen -->
+    <div id="player-select-screen" class="screen active">
+        <div class="container">
+            <h1 class="main-title">⚽ TNF 2025 WRAPPED</h1>
+            <p class="subtitle">50 Gameweeks | 82 Players | 419 Goals</p>
+            <p class="instruction">Select your name to see your year in review</p>
+            <div class="search-container">
+                <input type="text" id="player-search" class="search-input" placeholder="🔍 Search for a player...">
+            </div>
+            <div class="player-grid" id="player-grid"></div>
+        </div>
+    </div>
+
+    <!-- Slides Container -->
+    <div id="slides-container" class="slides-container">
+        <!-- Slides will be dynamically generated -->
+    </div>
+
+    <!-- Navigation -->
+    <div id="navigation" class="navigation hidden">
+        <button id="prev-btn" class="nav-btn">←</button>
+        <div id="progress-dots" class="progress-dots"></div>
+        <button id="next-btn" class="nav-btn">→</button>
+    </div>
+
+    <!-- html2canvas for image generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
