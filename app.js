@@ -59,6 +59,7 @@ function generateSlides() {
 
     // Section 1: Club Stats (5 slides)
     createIntroSlide();
+    createExplanationSlide();
     createSeasonOverviewSlide();
     createTopScorersSlide();
     createRecordsSlide();
@@ -87,6 +88,22 @@ function createIntroSlide() {
             <h1 class="slide-title">⚽<br>TNF 2025<br>WRAPPED</h1>
             <div class="slide-stat">50 Weeks</div>
             <p class="slide-description">82 players. 419 goals. 1 beautiful game.<br><br>Here's your year in football...</p>
+        </div>
+    `;
+    document.getElementById('slides-container').appendChild(slide);
+}
+
+function createExplanationSlide() {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.innerHTML = `
+        <div class="slide-content">
+            <h2 class="slide-title">How This Works</h2>
+            <p class="slide-description" style="font-size: 1.3rem; line-height: 1.8; max-width: 600px; margin: 0 auto;">
+                First up, we'll hit you with the club stats — the goals, the records, the chaos that made this season legendary.<br><br>
+                Then we'll zoom in on YOUR season specifically.<br><br>
+                Buckle up. Let's go.
+            </p>
         </div>
     `;
     document.getElementById('slides-container').appendChild(slide);
