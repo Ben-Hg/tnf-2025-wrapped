@@ -29,8 +29,8 @@ window.addEventListener('load', function() {
         console.error('Audio error code:', audio.error);
     });
 
-    // Set volume to 30%
-    audio.volume = 0.3;
+    // Set volume to 15%
+    audio.volume = 0.15;
     console.log('Volume set to:', audio.volume);
 
     let playing = false;
